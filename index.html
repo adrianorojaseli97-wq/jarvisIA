@@ -1,39 +1,73 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#07111f">
-<meta name="description" content="JARVIS AI: asistente de voz futurista para Android">
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="styles.css">
-<title>JARVIS AI</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#050a16">
+  <meta name="description" content="JARVIS AI, asistente personal por voz.">
+  <link rel="manifest" href="/static/manifest.webmanifest">
+  <link rel="stylesheet" href="/static/styles.css">
+  <title>JARVIS AI</title>
 </head>
 <body>
-<main class="app">
-  <header>
-    <div class="brand"><span class="brandmark">J</span><div><strong>JARVIS AI</strong><small>ASISTENTE PERSONAL</small></div></div>
-    <span class="status"><i></i> INTERFAZ ACTIVA</span>
-  </header>
-  <section class="hero">
-    <p class="eyebrow">SISTEMA DE ASISTENCIA</p>
-    <h1>¿En qué puedo<br><em>ayudarte?</em></h1>
-    <div class="orb-wrap" aria-hidden="true"><div class="orbit orbit-a"></div><div class="orbit orbit-b"></div><div class="orb"><span>J</span></div></div>
-    <p id="state" class="state">Sistema listo. Pulsa el micrófono para hablar.</p>
-    <button id="mic" class="mic" aria-label="Hablar con JARVIS"><span class="mic-icon">🎙</span><span id="miclabel">TOCAR PARA HABLAR</span></button>
-    <p class="hint">También puedes escribir tu mensaje abajo.</p>
-  </section>
-  <section class="conversation" aria-live="polite">
-    <div class="message jarvis"><span class="tag">JARVIS</span><p>Buenas. Estoy listo para ayudarte con comandos básicos por voz. La conexión con una IA generativa todavía no está configurada.</p></div>
-    <div id="messages"></div>
-  </section>
-  <form id="chatform" class="composer">
-    <input id="prompt" autocomplete="off" placeholder="Escribe un mensaje..." aria-label="Escribe un mensaje">
-    <button type="submit" aria-label="Enviar">➤</button>
-  </form>
-  <footer><span>JARVIS AI · MODO INICIAL</span><span id="clock">--:--</span></footer>
-</main>
-<script src="app.js"></script>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand"><div class="brand-mark">J</div><div><strong>JARVIS<span> AI</span></strong><small>PERSONAL INTELLIGENCE</small></div></div>
+      <div class="top-status"><span class="status-dot"></span><span id="system-status">SISTEMA EN LÍNEA</span></div>
+      <button id="settings-button" class="icon-button" aria-label="Configuración" title="Configuración">⚙</button>
+    </header>
+    <main>
+      <section class="hero">
+        <div class="eyebrow"><span></span> ASISTENTE PERSONAL</div>
+        <h1>Buenas noches.</h1>
+        <p class="subtitle">Estoy a su disposición. ¿En qué puedo ayudarle?</p>
+        <div id="orb-wrap" class="orb-wrap" aria-label="Visualización de JARVIS">
+          <div class="orb-ring ring-one"></div><div class="orb-ring ring-two"></div><div class="orb-ring ring-three"></div>
+          <div class="orb-core"><div class="orb-inner"></div><div class="orb-cross"></div></div>
+          <div class="orb-label" id="orb-label">JARVIS <span>LISTO</span></div>
+        </div>
+        <div class="status-line"><span class="pulse"></span><span id="voice-status">En espera de instrucciones</span></div>
+        <div class="voice-controls">
+          <button id="mic-button" class="mic-button" aria-label="Hablar con JARVIS"><span>🎙</span></button>
+          <button id="stop-button" class="secondary-button">Detener voz</button>
+        </div>
+        <p class="hint">Pulsa el micrófono y habla. El navegador puede pedir permiso para usarlo.</p>
+      </section>
+      <section class="workspace">
+        <div class="panel conversation-panel">
+          <div class="panel-head"><div><span class="panel-kicker">INTERFAZ</span><h2>Conversación</h2></div><button id="clear-button" class="text-button">Limpiar</button></div>
+          <div id="messages" class="messages" aria-live="polite">
+            <div class="message assistant"><div class="avatar">J</div><div><small>JARVIS · AHORA</small><p>Sistemas de interfaz listos. Para activar las respuestas inteligentes, configure un proveedor de IA en el servidor.</p></div></div>
+          </div>
+          <form id="chat-form" class="chat-form"><input id="chat-input" autocomplete="off" placeholder="Escriba una instrucción..." maxlength="8000" aria-label="Mensaje para JARVIS"><button type="submit" aria-label="Enviar mensaje">➤</button></form>
+        </div>
+        <div class="side-stack">
+          <div class="panel">
+            <div class="panel-head"><div><span class="panel-kicker">ESTADO DEL SISTEMA</span><h2>Centro de control</h2></div><span class="live-badge">● LIVE</span></div>
+            <div class="metric-row"><div class="metric-icon">◉</div><div class="metric-copy"><strong>Motor de IA</strong><small id="ai-state">Comprobando configuración…</small></div><span id="ai-pill" class="pill">…</span></div>
+            <div class="metric-row"><div class="metric-icon">⌁</div><div class="metric-copy"><strong>Entrada de voz</strong><small>Micrófono del dispositivo</small></div><span class="pill good">LISTO</span></div>
+            <div class="metric-row"><div class="metric-icon">⌂</div><div class="metric-copy"><strong>Google Home / Nest</strong><small id="home-state">Integración pendiente</small></div><span id="home-pill" class="pill warn">PENDIENTE</span></div>
+          </div>
+          <div class="panel quick-panel"><div class="panel-head"><div><span class="panel-kicker">ACCESO RÁPIDO</span><h2>Pruebe una orden</h2></div></div>
+            <button class="quick-command" data-prompt="Preséntate brevemente como JARVIS."><span>✧</span><div><strong>Presentación</strong><small>Conozca a su asistente</small></div><b>↗</b></button>
+            <button class="quick-command" data-prompt="Ayúdame a organizar mis tareas para hoy."><span>◷</span><div><strong>Organizar mi día</strong><small>Planificación y productividad</small></div><b>↗</b></button>
+            <button class="quick-command" data-prompt="Explícame qué hace falta para conectar JARVIS con Google Home de forma segura."><span>⌂</span><div><strong>Conectar mi hogar</strong><small>Requisitos de integración</small></div><b>↗</b></button>
+          </div>
+          <div class="privacy-note"><span>◇</span><p><strong>Privacidad primero</strong><br>El micrófono se activa solo al pulsarlo. La clave de IA permanece en el servidor.</p></div>
+        </div>
+      </section>
+    </main>
+    <footer><span>JARVIS AI · MVP 0.1</span><span>SESIÓN SEGURA · NO SE HA CONECTADO GOOGLE HOME</span></footer>
+  </div>
+  <dialog id="settings-dialog">
+    <div class="dialog-head"><div><span class="panel-kicker">PREFERENCIAS</span><h2>Configuración</h2></div><button id="close-settings" class="icon-button" aria-label="Cerrar">×</button></div>
+    <p>La configuración de la API se guarda en el servidor, nunca en este navegador.</p>
+    <div class="setting-row"><div><strong>Voz del asistente</strong><small>Voz disponible en este dispositivo</small></div><select id="voice-select" aria-label="Seleccionar voz"><option value="">Voz predeterminada</option></select></div>
+    <div class="setting-row"><div><strong>Hablar respuestas</strong><small>Usa el motor de voz del navegador</small></div><input id="speak-toggle" type="checkbox" checked></div>
+    <div class="setting-row"><div><strong>Proveedor de IA</strong><small id="settings-ai">Comprobando…</small></div></div>
+    <div class="setting-row"><div><strong>Google Home</strong><small>Requiere proyecto oficial y autorización OAuth</small></div></div>
+    <button id="close-settings-bottom" class="primary-button">Listo</button>
+  </dialog>
+  <script src="/static/app.js"></script>
 </body>
 </html>

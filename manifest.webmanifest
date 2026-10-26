@@ -1,0 +1,10 @@
+{
+  "name": "JARVIS AI",
+  "short_name": "JARVIS",
+  "description": "Asistente personal por voz",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050913",
+  "theme_color": "#050a16",
+  "icons": []
+}
