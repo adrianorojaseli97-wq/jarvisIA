@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07111f">
+<meta name="description" content="JARVIS AI: asistente de voz futurista para Android">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css">
+<title>JARVIS AI</title>
+</head>
+<body>
+<main class="app">
+  <header>
+    <div class="brand"><span class="brandmark">J</span><div><strong>JARVIS AI</strong><small>ASISTENTE PERSONAL</small></div></div>
+    <span class="status"><i></i> INTERFAZ ACTIVA</span>
+  </header>
+  <section class="hero">
+    <p class="eyebrow">SISTEMA DE ASISTENCIA</p>
+    <h1>¿En qué puedo<br><em>ayudarte?</em></h1>
+    <div class="orb-wrap" aria-hidden="true"><div class="orbit orbit-a"></div><div class="orbit orbit-b"></div><div class="orb"><span>J</span></div></div>
+    <p id="state" class="state">Sistema listo. Pulsa el micrófono para hablar.</p>
+    <button id="mic" class="mic" aria-label="Hablar con JARVIS"><span class="mic-icon">🎙</span><span id="miclabel">TOCAR PARA HABLAR</span></button>
+    <p class="hint">También puedes escribir tu mensaje abajo.</p>
+  </section>
+  <section class="conversation" aria-live="polite">
+    <div class="message jarvis"><span class="tag">JARVIS</span><p>Buenas. Estoy listo para ayudarte con comandos básicos por voz. La conexión con una IA generativa todavía no está configurada.</p></div>
+    <div id="messages"></div>
+  </section>
+  <form id="chatform" class="composer">
+    <input id="prompt" autocomplete="off" placeholder="Escribe un mensaje..." aria-label="Escribe un mensaje">
+    <button type="submit" aria-label="Enviar">➤</button>
+  </form>
+  <footer><span>JARVIS AI · MODO INICIAL</span><span id="clock">--:--</span></footer>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
