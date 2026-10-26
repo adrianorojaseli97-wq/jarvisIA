@@ -1,0 +1,36 @@
+
+name: Publicar JARVIS AI
+
+on:
+  push:
+    branches: ["principal"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar archivos
+        uses: actions/checkout@v4
+
+      - name: Preparar aplicación
+        run: |
+          mkdir public
+          cp "índice.html" public/index.html
+          cp app.js estilos.css manifiesto.webmanifest sw.js public/
+
+      - name: Configurar Pages
+        uses: actions/configure-pages@v5
+
+      - name: Subir aplicación
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+      - name: Publicar aplicación
+        uses: actions/deploy-pages@v4
