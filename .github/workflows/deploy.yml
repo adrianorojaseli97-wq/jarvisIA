@@ -17,12 +17,16 @@ jobs:
     steps:
       - name: Descargar archivos
         uses: actions/checkout@v4
-
+        
       - name: Preparar aplicación
         run: |
-          mkdir public
-          cp "índice.html" public/index.html
-          cp app.js estilos.css manifiesto.webmanifest sw.js public/
+          mkdir -p public
+          cp index.html public/index.html
+          cp app.js public/app.js
+          cp styles.css public/styles.css
+          cp manifest.webmanifest public/manifest.webmanifest
+          cp sw.js public/sw.js
+
 
       - name: Configurar Pages
         uses: actions/configure-pages@v5
